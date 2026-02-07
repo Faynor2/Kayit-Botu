@@ -17,7 +17,7 @@ const client = new Client({
 
 // AYARLAR - Tokeni buraya YAZMA, Render üzerinden ekleyeceğiz
 const TOKEN = process.env.TOKEN; 
-const KAYIT_ROL_ID = '12156941110959345734'; // Bu ID kalabilir, sorun yok
+const KAYIT_ROL_ID = '1215694110959345734'; // Bu ID kalabilir, sorun yok
 
 client.once('ready', () => {
     console.log(`✅ ${client.user.tag} giriş yaptı!`);
@@ -52,7 +52,8 @@ client.on('messageCreate', async (message) => {
             
         } catch (error) {
             console.error('Hata Detayı:', error.message);
-            message.reply('❌ Yetki hatası! Lütfen botun rolünü en üste taşıdığından emin ol.');
+            // Hatayı daha detaylı görmek için mesajı güncelledik:
+            message.reply(`❌ Bir hata oluştu! Hata Mesajı: \`${error.message}\``);
         }
     }
 });
