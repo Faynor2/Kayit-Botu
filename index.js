@@ -67,12 +67,11 @@ const KAYIT_KANAL_ID = '1215674267312853034'; // Sadece bu kanalda çalışacak
 client.on('messageCreate', async (message) => {
     if (message.content.startsWith('.kayıt') && !message.author.bot) {
         
-        // Kanal kontrolü
-        // Kanal kontrolü
+       // Kanal kontrolü
         if (message.channel.id !== KAYIT_KANAL_ID) {
-            message.reply(`❌ Bu komutu sadece <#${KAYIT_KANAL_ID}> kanalında kullanabilirsin!`)
+            message.reply(`❌ Bu komutu sadece <#${1215674267312853034}> kanalında kullanabilirsin!`)
                 .then(msg => setTimeout(() => msg.delete(), 5000));
-            return; // BURASI ÇOK ÖNEMLİ: Hatalı kanalsa kod burada DURMALI.
+            return; // <--- Bu satır, yanlış kanalsa kodun aşağıya devam etmesini ENGELLER.
         }
 
         const args = message.content.split(' ');
@@ -102,4 +101,5 @@ client.on('messageCreate', async (message) => {
 });
 
 client.login(TOKEN);
+
 
