@@ -68,9 +68,11 @@ client.on('messageCreate', async (message) => {
     if (message.content.startsWith('.kayıt') && !message.author.bot) {
         
         // Kanal kontrolü
+        // Kanal kontrolü
         if (message.channel.id !== KAYIT_KANAL_ID) {
-            return message.reply(`❌ Bu komutu sadece <#${KAYIT_KANAL_ID}> kanalında kullanabilirsin!`)
+            message.reply(`❌ Bu komutu sadece <#${KAYIT_KANAL_ID}> kanalında kullanabilirsin!`)
                 .then(msg => setTimeout(() => msg.delete(), 5000));
+            return; // BURASI ÇOK ÖNEMLİ: Hatalı kanalsa kod burada DURMALI.
         }
 
         const args = message.content.split(' ');
@@ -100,3 +102,4 @@ client.on('messageCreate', async (message) => {
 });
 
 client.login(TOKEN);
+
