@@ -58,8 +58,6 @@ client.on('messageCreate', async (message) => {
     }
 });
 
-client.login(TOKEN);
-
 // ... (üstteki express ve client ayarları aynı kalsın)
 
 const KAYIT_KANAL_ID = '1215674267312853034'; // Sadece bu kanalda çalışacak
@@ -100,6 +98,4 @@ client.on('messageCreate', async (message) => {
     }
 });
 
-client.login(TOKEN);
-
-
+client.login(process.env.TOKEN);
