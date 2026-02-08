@@ -59,3 +59,44 @@ client.on('messageCreate', async (message) => {
 });
 
 client.login(TOKEN);
+
+// ... (üstteki express ve client ayarları aynı kalsın)
+
+const KAYIT_KANAL_ID = '1215674267312853034'; // Sadece bu kanalda çalışacak
+
+client.on('messageCreate', async (message) => {
+    if (message.content.startsWith('.kayıt') && !message.author.bot) {
+        
+        // Kanal kontrolü
+        if (message.channel.id !== KAYIT_KANAL_ID) {
+            return message.reply(`❌ Bu komutu sadece <#${KAYIT_KANAL_ID}> kanalında kullanabilirsin!`)
+                .then(msg => setTimeout(() => msg.delete(), 5000));
+        }
+
+        const args = message.content.split(' ');
+        const isim = args[1];
+        const yas = args[2];
+
+        if (!isim || !yas) {
+            return message.reply('❌ Yanlış kullanım! Doğrusu: `.kayıt İsim Yaş`');
+        }
+
+        try {
+            // Sunucu sahibi kontrolü
+            if (message.guild.ownerId === message.author.id) {
+                await message.member.roles.add(KAYIT_ROL_ID);
+                return message.reply('⚠️ Sunucu sahibi olduğun için ismini değiştiremedim ama rolünü verdim!');
+            }
+
+            await message.member.setNickname(`${isim} | ${yas}`);
+            await message.member.roles.add(KAYIT_ROL_ID);
+            message.reply(`✅ Kayıt başarılı! Hoş geldin **${isim}**.`);
+            
+        } catch (error) {
+            console.error('Hata:', error.message);
+            message.reply('❌ Yetki hatası! Botun rolü üyenin veya verilecek rolün altında olabilir.');
+        }
+    }
+});
+
+client.login(TOKEN);
